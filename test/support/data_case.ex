@@ -24,6 +24,7 @@ defmodule Octos.DataCase do
       import Ecto.Changeset
       import Ecto.Query
       import Octos.DataCase
+      import Octos.Factory
     end
   end
 
