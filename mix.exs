@@ -44,7 +44,9 @@ defmodule Octos.MixProject do
       {:gettext, "~> 0.26"},
       {:jason, "~> 1.2"},
       {:dns_cluster, "~> 0.1.1"},
-      {:bandit, "~> 1.5"}
+      {:bandit, "~> 1.5"},
+      {:faker, "~> 0.18", only: [:dev, :test]},
+      {:ex_machina, "~> 2.8", only: :test}
     ]
   end
 
