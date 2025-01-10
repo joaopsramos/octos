@@ -10,6 +10,8 @@ defmodule Octos.Cameras.Camera do
   alias Octos.Accounts.User
   alias __MODULE__
 
+  @derive {Flop.Schema, filterable: [:brand], sortable: [:brand]}
+
   @brands ["Intelbras", "Hikvision", "Giga", "Vivotek"]
 
   @type t() :: %Camera{
