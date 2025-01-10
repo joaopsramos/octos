@@ -22,6 +22,11 @@ config :octos, OctosWeb.Endpoint,
   pubsub_server: Octos.PubSub,
   live_view: [signing_salt: "CqUj7K9o"]
 
+config :octos, Oban,
+  engine: Oban.Engines.Basic,
+  queues: [default: 10],
+  repo: Octos.Repo
+
 # Configures the mailer
 #
 # By default it uses the "Local" adapter which stores the emails

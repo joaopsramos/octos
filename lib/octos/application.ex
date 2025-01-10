@@ -10,6 +10,7 @@ defmodule Octos.Application do
     children = [
       OctosWeb.Telemetry,
       Octos.Repo,
+      {Oban, Application.fetch_env!(:octos, Oban)},
       {DNSCluster, query: Application.get_env(:octos, :dns_cluster_query) || :ignore},
       {Phoenix.PubSub, name: Octos.PubSub},
       # Start the Finch HTTP client for sending emails
