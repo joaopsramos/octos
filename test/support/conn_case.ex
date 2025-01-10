@@ -28,6 +28,7 @@ defmodule OctosWeb.ConnCase do
       import Plug.Conn
       import Phoenix.ConnTest
       import OctosWeb.ConnCase
+      import Octos.Factory
     end
   end
 
