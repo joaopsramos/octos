@@ -2,6 +2,10 @@ alias Octos.Accounts.User
 alias Octos.Cameras.Camera
 alias Octos.Repo
 
+if Mix.env() != :dev do
+  exit(:shutdown)
+end
+
 previous_log_level = Logger.level()
 Logger.configure(level: :info)
 
