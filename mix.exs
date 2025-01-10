@@ -45,6 +45,8 @@ defmodule Octos.MixProject do
       {:jason, "~> 1.2"},
       {:dns_cluster, "~> 0.1.1"},
       {:bandit, "~> 1.5"},
+      {:goal, "~> 1.1"},
+      {:flop, "~> 0.26.1"},
       {:faker, "~> 0.18", only: [:dev, :test]},
       {:ex_machina, "~> 2.8", only: :test}
     ]
