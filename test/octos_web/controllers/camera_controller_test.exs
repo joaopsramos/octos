@@ -1,5 +1,11 @@
 defmodule OctosWeb.CameraControllerTest do
   use OctosWeb.ConnCase, async: true
+  use Oban.Testing, repo: Octos.Repo
+
+  import Swoosh.TestAssertions
+
+  alias Octos.Cameras.Camera
+  alias Octos.Cameras.NotifyUserEmail
 
   setup %{conn: conn} do
     {:ok, conn: put_req_header(conn, "accept", "application/json")}
@@ -90,6 +96,40 @@ defmodule OctosWeb.CameraControllerTest do
                  "sort" => ["is invalid"]
                }
              } = json_response(conn, 422)
+    end
+  end
+
+  describe "notify" do
+    test "send emails to users by camera brand", %{conn: conn} do
+      users = insert_list(2, :user, cameras: [build(:camera, brand: Camera.vivotek())])
+
+      Oban.Testing.with_testing_mode(:inline, fn ->
+        conn = post(conn, ~p"/api/notify-users", brand: Camera.vivotek())
+
+        for user <- users do
+          user
+          |> NotifyUserEmail.notify(Camera.vivotek())
+          |> assert_email_sent()
+        end
+
+        assert response(conn, 200) == ""
+      end)
+    end
+
+    test "uses default brand", %{conn: conn} do
+      users = insert_list(2, :user, cameras: [build(:camera, brand: Camera.hikvision())])
+
+      Oban.Testing.with_testing_mode(:inline, fn ->
+        conn = post(conn, ~p"/api/notify-users")
+
+        for user <- users do
+          user
+          |> NotifyUserEmail.notify(Camera.hikvision())
+          |> assert_email_sent()
+        end
+
+        assert response(conn, 200) == ""
+      end)
     end
   end
 end

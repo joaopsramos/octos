@@ -3,8 +3,12 @@ defmodule OctosWeb.CameraController do
   use Goal
 
   alias Octos.Accounts
+  alias Octos.Cameras
+  alias Octos.Cameras.Camera
 
   action_fallback OctosWeb.FallbackController
+
+  @default_camera_to_notify Camera.hikvision()
 
   def index(conn, params) do
     with {:ok, params} <- validate(:index, params) do
@@ -18,6 +22,13 @@ defmodule OctosWeb.CameraController do
         })
 
       render(conn, :index, users: users, meta: meta)
+    end
+  end
+
+  def notify(conn, params) do
+    case Cameras.notify_users_by_brand(params["brand"] || @default_camera_to_notify) do
+      :ok -> send_resp(conn, 200, "")
+      {:error, reason} -> json(conn, %{error: reason})
     end
   end
 
