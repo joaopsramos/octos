@@ -18,6 +18,8 @@ defmodule Octos.DataCase do
 
   using do
     quote do
+      use Oban.Testing, repo: Octos.Repo
+
       alias Octos.Repo
 
       import Ecto
