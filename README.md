@@ -108,7 +108,7 @@ No content
 
 - I thought it would be better to run the seed only in the dev environment.
 Running it in the test environment would make it harder to test the records being seeded.
-Since it currently runs only in the dev environment, it would make more sense for it to be a Mix task.
+Since I did it this way, it would make more sense for it to be a Mix task.
 - I ended up using two libraries that validate parameters (Goal and Flop). The reason for this is that
 I find the format used by Flop a bit awkward to expose directly through the API. Additionally,
 I didn’t want to be tied to the format of a specific library, considering it might be replaced in the future.
