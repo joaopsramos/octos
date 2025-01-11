@@ -14,14 +14,14 @@ defmodule Octos.AccountsTest do
     end
 
     test "accept params" do
-      insert(:user, cameras: [build(:camera, brand: "Intelbras"), build(:camera, brand: "Giga")])
+      insert(:user, cameras: [build(:camera, name: "kitchen"), build(:camera, name: "garden")])
 
       {[%User{cameras: [camera]}], _meta} =
         Accounts.list_users_with_active_cameras(%{
-          filters: [%{field: "brand", op: "ilike", value: "giGA"}]
+          filters: [%{field: "name", op: "ilike", value: "GarDEn"}]
         })
 
-      assert camera.brand == "Giga"
+      assert camera.name == "garden"
     end
 
     test "can paginate results not affecting cameras count" do

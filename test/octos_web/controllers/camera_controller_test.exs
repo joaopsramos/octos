@@ -40,6 +40,7 @@ defmodule OctosWeb.CameraControllerTest do
 
       assert camera["id"] == inserted_camera.id
       assert camera["brand"] == inserted_camera.brand
+      assert camera["name"] == inserted_camera.name
       assert camera["active"] == inserted_camera.active
     end
 
@@ -52,27 +53,27 @@ defmodule OctosWeb.CameraControllerTest do
       assert length(user["cameras"]) == 3
     end
 
-    test "can filter by camera brand", %{conn: conn} do
-      insert(:user, cameras: [build(:camera, brand: "Intelbras"), build(:camera, brand: "Giga")])
+    test "can filter by camera name", %{conn: conn} do
+      insert(:user, cameras: [build(:camera, name: "kitchen"), build(:camera, name: "garden")])
 
-      conn = get(conn, ~p"/api/cameras", brand: "Giga")
+      conn = get(conn, ~p"/api/cameras", name: "garDEn")
 
       assert %{"users" => [%{"cameras" => [camera]}]} = json_response(conn, 200)
-      assert camera["brand"] == "Giga"
+      assert camera["name"] == "garden"
     end
 
-    test "can sort by camera brand", %{conn: conn} do
-      insert(:user, cameras: [build(:camera, brand: "Intelbras"), build(:camera, brand: "Giga")])
+    test "can sort by camera name", %{conn: conn} do
+      insert(:user, cameras: [build(:camera, name: "kitchen"), build(:camera, name: "garden")])
 
-      conn = get(conn, ~p"/api/cameras", sort: "brand", direction: "asc")
-
-      assert %{"users" => [%{"cameras" => cameras}]} = json_response(conn, 200)
-      assert Enum.map(cameras, & &1["brand"]) == ["Giga", "Intelbras"]
-
-      conn = get(conn, ~p"/api/cameras", sort: "brand", direction: "desc")
+      conn = get(conn, ~p"/api/cameras", sort: "name", direction: "asc")
 
       assert %{"users" => [%{"cameras" => cameras}]} = json_response(conn, 200)
-      assert Enum.map(cameras, & &1["brand"]) == ["Intelbras", "Giga"]
+      assert Enum.map(cameras, & &1["name"]) == ["garden", "kitchen"]
+
+      conn = get(conn, ~p"/api/cameras", sort: "name", direction: "desc")
+
+      assert %{"users" => [%{"cameras" => cameras}]} = json_response(conn, 200)
+      assert Enum.map(cameras, & &1["name"]) == ["kitchen", "garden"]
     end
 
     test "uses default pagination", %{conn: conn} do
@@ -86,7 +87,7 @@ defmodule OctosWeb.CameraControllerTest do
       insert_list(100, :user, cameras: build_list(2, :camera))
 
       conn =
-        get(conn, ~p"/api/cameras", sort: "name", direction: "asc-desc", page: -1, page_size: 101)
+        get(conn, ~p"/api/cameras", sort: "brand", direction: "asc-desc", page: -1, page_size: 101)
 
       assert %{
                "errors" => %{

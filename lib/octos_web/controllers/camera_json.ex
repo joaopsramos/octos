@@ -23,6 +23,7 @@ defmodule OctosWeb.CameraJSON do
     %{
       id: camera.id,
       brand: camera.brand,
+      name: camera.name,
       active: camera.active
     }
   end

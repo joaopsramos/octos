@@ -14,7 +14,7 @@ defmodule OctosWeb.CameraController do
     with {:ok, params} <- validate(:index, params) do
       {users, meta} =
         Accounts.list_users_with_active_cameras(%{
-          "filters" => [%{"field" => "brand", "op" => "ilike", "value" => params[:brand]}],
+          "filters" => [%{"field" => "name", "op" => "ilike", "value" => params[:name]}],
           "order_by" => [params.sort],
           "order_directions" => [params.direction],
           "page" => params.page,
@@ -33,8 +33,8 @@ defmodule OctosWeb.CameraController do
   end
 
   defparams :index do
-    optional(:brand, :string)
-    optional(:sort, :enum, values: ["brand"], default: :brand)
+    optional(:name, :string)
+    optional(:sort, :enum, values: ["name"], default: :name)
     optional(:direction, :enum, values: ["asc", "desc"], default: :asc)
     optional(:page, :integer, min: 1, default: 1)
     optional(:page_size, :integer, min: 1, max: 100, default: 50)
