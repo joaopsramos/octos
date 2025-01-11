@@ -36,7 +36,9 @@ defmodule Octos.Accounts do
 
     preload_query = from(c in Camera, where: c.active) |> Flop.query(camera_flop)
 
-    {results, meta} = Flop.validate_and_run!(User, Map.take(params, page_keys))
+    {results, meta} =
+      from(u in User, order_by: [desc: u.id])
+      |> Flop.validate_and_run!(Map.take(params, page_keys))
 
     {Repo.preload(results, cameras: preload_query), meta}
   end

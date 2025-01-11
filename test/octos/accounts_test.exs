@@ -5,6 +5,15 @@ defmodule Octos.AccountsTest do
   alias Octos.Accounts.User
 
   describe "list_users_with_active_cameras/1" do
+    test "sort users by id for pagination" do
+      inserted_ids =
+        insert_list(3, :user, cameras: [build(:camera)]) |> Enum.map(& &1.id) |> Enum.sort(:desc)
+
+      {users, _meta} = Accounts.list_users_with_active_cameras()
+
+      assert Enum.map(users, & &1.id) == inserted_ids
+    end
+
     test "return only active cameras" do
       insert(:user, cameras: [build(:camera, active: false), build(:camera, active: true)])
 
