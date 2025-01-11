@@ -16,6 +16,7 @@ defmodule Octos.Cameras.Camera do
 
   @type t() :: %Camera{
           brand: String.t(),
+          name: String.t(),
           active: boolean(),
           user_id: integer(),
           user: User.t() | Ecto.Association.NotLoaded.t()
@@ -23,6 +24,7 @@ defmodule Octos.Cameras.Camera do
 
   schema "cameras" do
     field :brand, :string
+    field :name, :string
     field :active, :boolean, default: true
 
     belongs_to :user, User

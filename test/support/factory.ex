@@ -14,6 +14,7 @@ defmodule Octos.Factory do
   def camera_factory do
     %Camera{
       brand: Enum.random(Camera.brands()),
+      name: Faker.Superhero.name(),
       active: true
     }
   end

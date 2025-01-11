@@ -42,6 +42,7 @@ end
 build_camera = fn user ->
   %{
     brand: Enum.random(Camera.brands()),
+    name: Faker.Superhero.name(),
     active: Enum.random([true, false]),
     user_id: user.id,
     inserted_at: {:placeholder, :now},
