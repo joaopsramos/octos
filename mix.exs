@@ -49,7 +49,8 @@ defmodule Octos.MixProject do
       {:flop, "~> 0.26.1"},
       {:oban, "~> 2.17"},
       {:faker, "~> 0.18", only: [:dev, :test]},
-      {:ex_machina, "~> 2.8", only: :test}
+      {:ex_machina, "~> 2.8", only: :test},
+      {:mimic, "~> 1.10", only: :test}
     ]
   end
 
