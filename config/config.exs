@@ -25,8 +25,7 @@ config :octos, OctosWeb.Endpoint,
 config :octos, Oban,
   engine: Oban.Engines.Basic,
   queues: [default: 10, mailer: 5],
-  repo: Octos.Repo,
-  testing: :manual
+  repo: Octos.Repo
 
 # Configures the mailer
 #
