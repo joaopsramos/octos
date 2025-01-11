@@ -31,7 +31,9 @@ defmodule Octos.Accounts do
   def list_users_with_active_cameras(params \\ %{}) do
     page_keys = ["page", "page_size", :page, :page_size]
 
-    camera_flop = params |> Map.drop(page_keys) |> Flop.validate!(for: Camera)
+    camera_flop =
+      params |> Map.drop(page_keys) |> Flop.validate!(for: Camera, default_limit: false)
+
     preload_query = from(c in Camera, where: c.active) |> Flop.query(camera_flop)
 
     {results, meta} = Flop.validate_and_run!(User, Map.take(params, page_keys))
